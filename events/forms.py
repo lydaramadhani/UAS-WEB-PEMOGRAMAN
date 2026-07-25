@@ -1,3 +1,4 @@
+# Form checkout untuk proses pemesanan tiket peserta
 from django import forms
 from django.contrib.auth.models import User
 from .models import Event, Category, Order, UserProfile
@@ -96,7 +97,7 @@ class PaymentProofForm(forms.ModelForm):
             'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Catatan transfer / Nama pengirim rekening...'}),
         }
 
-
+# Perhitungan otomatis total harga berdasarkan jumlah tiket
 class TicketValidationForm(forms.Form):
     ticket_code = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
         'class': 'form-control form-control-lg text-uppercase font-monospace',
