@@ -1,3 +1,4 @@
+# Form checkout untuk proses pemesanan tiket peserta
 from django import forms
 from django.contrib.auth.models import User
 from .models import Event, Category, Order, UserProfile
