@@ -1,3 +1,4 @@
+# Status transaksi tiket untuk proses verifikasi organizer
 import os
 from django.db import models
 from django.contrib.auth.models import User
