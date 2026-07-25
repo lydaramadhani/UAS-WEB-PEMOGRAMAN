@@ -5,7 +5,7 @@ import qrcode
 from django.core.files.base import ContentFile
 from django.utils import timezone
 
-
+# Utility untuk proses pembuatan QR Code e-ticket peserta
 def generate_order_code():
     date_str = timezone.now().strftime('%Y%m%d')
     rand = ''.join(random.choices(string.digits, k=4))
