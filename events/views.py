@@ -263,7 +263,7 @@ def my_tickets_view(request):
     }
     return render(request, 'peserta/my_tickets.html', context)
 
-
+# Proses approval pesanan tiket oleh organizer
 @login_required
 def ticket_detail_view(request, ticket_code):
     ticket = get_object_or_404(Ticket, ticket_code=ticket_code)
