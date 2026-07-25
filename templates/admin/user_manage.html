@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}Manajemen Pengguna - Master Admin Control{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="fw-bold text-dark mb-1" style="font-family: 'Outfit', sans-serif;">👑 Master Admin: Manajemen Pengguna & Peran</h3>
+      <p class="text-muted small mb-0">Kelola akun terdaftar, ubah hak akses Event Organizer (EO), dan pantau registrasi pengguna.</p>
+    </div>
+    <a href="{% url 'organizer_dashboard' %}" class="btn btn-outline-cute">
+      ← Kembali ke Master Dashboard
+    </a>
+  </div>
+
+  <div class="cute-card p-4">
+    <div class="table-responsive">
+      <table class="table table-cute align-middle mb-0">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Username</th>
+            <th>Nama Lengkap</th>
+            <th>Email</th>
+            <th>Nomor WhatsApp</th>
+            <th>Peran Akses saat ini</th>
+            <th>Aksi Kelola Peran</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td class="fw-bold text-orange">{{ u.username }}</td>
+              <td class="fw-semibold text-dark">{{ u.get_full_name|default:"-" }}</td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.profile.phone|default:"-" }}</td>
+              <td>
+                {% if u.is_staff %}
+                  <span class="badge bg-danger text-white">Master Admin</span>
+                {% elif u.profile.is_organizer %}
+                  <span class="badge bg-warning text-dark">Event Organizer</span>
+                {% else %}
+                  <span class="badge bg-info text-white">Peserta / Buyer</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if not u.is_superuser %}
+                  <form method="post" action="{% url 'admin_user_toggle_role' user_id=u.id %}" class="d-inline">
+                    {% csrf_token %}
+                    {% if u.profile.is_organizer %}
+                      <button type="submit" class="btn btn-outline-cute btn-sm text-danger">
+                        Demote to Peserta
+                      </button>
+                    {% else %}
+                      <button type="submit" class="btn btn-coral btn-sm text-white">
+                        Promote to EO ✨
+                      </button>
+                    {% endif %}
+                  </form>
+                {% else %}
+                  <span class="text-muted small">Superuser System</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
